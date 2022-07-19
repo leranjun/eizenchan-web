@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <!-- 必须的 meta 标签 -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap 的 CSS 文件 -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.0-beta1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        fieldset {
+            padding-top: 56px;
+            margin-top: -56px;
+        }
+    </style>
+
+    <title>VOCALOID条目生成器</title>
+</head>
+
+<body>
+
+    <nav id="navbar" class="navbar navbar-expand-lg sticky-top bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">VOCALOID条目生成器</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#song-info">歌曲</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#article-info">条目</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#songbox-info">Songbox</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#songbox-intro-info">Songbox introduction</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#lyrics">歌词</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#navbox">模板</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#category">分类</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-3">
+        <form id="main-form" class="needs-validation" novalidate>
+            <fieldset id="song-info">
+                <legend>歌曲基础信息</legend>
+
+                <div class="mb-3">
+                    <label for="song-title" class="form-label">歌曲名称</label>
+                    <input type="text" class="form-control" id="song-title" required>
+                    <div class="invalid-feedback">请填写此字段。</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="song-language" class="form-label">歌曲语种</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="song-language" value="cn" id="song-CN"
+                            checked>
+                        <label class="form-check-label" for="song-CN">
+                            中文
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="song-language" value="jp" id="song-JP">
+                        <label class="form-check-label" for="song-JP">
+                            日文
+                        </label>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="song-platform" class="form-label">投稿平台</label>
+
+                    <div class="row align-items-center">
+                        <div class="col-xl-1 col-sm-2 col-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="bilibili-checkbox">
+                                <label class="form-check-label" for="bilibili-checkbox">Bilibili</label>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-md-3 col-sm-4 col-auto">
+                            <input type="text" class="form-control mb-1" id="bilibili-id" placeholder="B站视频av/bv号"
+                                disabled>
+                        </div>
+                        <div class="col-auto">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="bilibili-datafill"
+                                    disabled>
+                                <label class="form-check-label" for="bilibili-datafill">使用Bilibili数据自动填充</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row align-items-center">
+                        <div class="col-xl-1 col-sm-2 col-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="acfun-checkbox">
+                                <label class="form-check-label" for="acfun-checkbox">AcFun</label>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-md-3 col-sm-4 col-auto">
+                            <input type="text" class="form-control mb-1" id="acfun-id" placeholder="A站视频ac号" disabled>
+                        </div>
+                    </div>
+
+                    <div class="row align-items-center">
+                        <div class="col-xl-1 col-sm-2 col-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="niconico-checkbox">
+                                <label class="form-check-label" for="niconico-checkbox">niconico</label>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-md-3 col-sm-4 col-auto">
+                            <input type="text" class="form-control mb-1" id="niconico-id" placeholder="N站视频sm号"
+                                disabled>
+                        </div>
+                    </div>
+
+                    <div class="row align-items-center">
+                        <div class="col-xl-1 col-sm-2 col-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="youtube-checkbox">
+                                <label class="form-check-label" for="youtube-checkbox">YouTube</label>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-md-3 col-sm-4 col-auto">
+                            <input type="text" class="form-control mb-1" id="youtube-id" placeholder="YouTube视频ID"
+                                disabled>
+                        </div>
+                    </div>
+
+                    <div class="row align-items-center">
+                        <div class="col-xl-1 col-sm-2 col-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="other-checkbox">
+                                <label class="form-check-label" for="other-checkbox">其他</label>
+                            </div>
+                        </div>
+                        <div class="col-xl-5 col-md-6 col-7">
+                            <input type="text" class="form-control mb-1" id="other-id" placeholder="其他网址（输入wikitext）"
+                                disabled>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3" id="song-update-control">
+                    <label for="song-update" class="form-label">投稿时间</label>
+                    <input type="date" class="form-control" id="song-update" required>
+                    <div class="invalid-feedback">请填写此字段。</div>
+                </div>
+
+                <div class="mb-3" id="song-uploader-control">
+                    <label for="song-uploader" class="form-label">投稿者</label>
+
+                    <div class="row gx-3 align-items-center">
+                        <div class="col-auto">
+                            <select class="form-select">
+                                <option>P主</option>
+                                <option>UP主</option>
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" class="form-control" placeholder="投稿者">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="song-platform" class="form-label">歌曲播放/再生数</label>
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="view">
+                                <label class="form-check-label" for="view">手动填充</label>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" class="form-control mb-1" id="view-input" placeholder="视频再生数" disabled>
+                        </div>
+                    </div>
+                </div>
+
+            </fieldset>
+
+            <fieldset id="article-info">
+                <legend>条目基础信息</legend>
+
+                <div class="mb-3">
+                    <label for="song-achievement" class="form-label">歌曲荣誉</label>
+                    <select class="form-select" id="song-achievement">
+                        <option selected>无</option>
+                        <option value="殿堂">VOCALOID殿堂曲</option>
+                        <option value="传说">VOCALOID传说曲</option>
+                        <option value="神话">VOCALOID神话曲</option>
+                        <option value="中文殿堂">VOCALOID中文殿堂曲</option>
+                        <option value="中文传说">VOCALOID中文传说曲</option>
+                        <option value="中文神话">VOCALOID中文神话曲</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" value="" id="song-cquote">
+                        <label class="form-check-label" for="song-cquote">歌曲引言</label>
+                    </div>
+                    <textarea class="form-control" id="song-cquote-input" rows="2" placeholder="编辑引言"
+                        disabled></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <div class="mb-2">
+                        <label for="singer" class="form-label">演唱者</label>
+                        <input type="text" class="form-control" id="singer" required>
+                        <div class="invalid-feedback">请填写此字段。</div>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="singer-staff" checked>
+                        <label class="form-check-label" for="singer-staff">将演唱者补充至STAFF介绍最后一位</label>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="LDCowner" class="form-label">LDC所有者</label>
+                    <input type="text" class="form-control" id="LDCowner">
+                </div>
+
+            </fieldset>
+
+            <fieldset id="songbox-info">
+                <legend>VOCALOID Songbox信息</legend>
+
+                <div class="form-check form-switch mb-2">
+                    <input class="form-check-input" type="checkbox" id="parameter-full">
+                    <label class="form-check-label" for="parameter-full">详细参数</label>
+                </div>
+
+                <div class="mb-3">
+                    <label for="pic-filename" class="form-label">图片文件</label>
+                    <input type="text" class="form-control" id="pic-filename"
+                        pattern=".+\.(?:png|gif|jpg|jpeg|webp|svg|pdf|jp2)$" required>
+                    <div class="invalid-feedback">您填写的文件名不符合格式。</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="pic-info" class="form-label">图片信息</label>
+                    <input type="text" class="form-control" id="pic-info">
+                </div>
+
+                <div class="mb-3" id="songbox-bg-simplify">
+                    <label for="songbox-bg" class="form-label">背景颜色</label>
+                    <input type="text" class="form-control" id="songbox-bg">
+                </div>
+
+                <div class="mb-3 d-none" id="songbox-bg-full">
+                    <label for="songbox-bg-line1" class="form-label">背景颜色</label>
+                    <input type="text" class="form-control mb-1" id="songbox-bg-line1" placeholder="“演唱”栏的背景样式">
+                    <input type="text" class="form-control my-1" id="songbox-bg-line2" placeholder="“P主/UP主”栏的背景样式">
+                    <input type="text" class="form-control mt-1" id="songbox-bg-line3" placeholder="“链接”栏的背景样式">
+                </div>
+
+                <div class="mb-3" id="songbox-style-simplify">
+                    <label for="songbox-style" class="form-label">文字样式</label>
+                    <input type="text" class="form-control" id="songbox-style">
+                </div>
+
+                <div class="mb-3 d-none" id="songbox-style-full">
+                    <label for="songbox-style" class="form-label">文字样式</label>
+                    <input type="text" class="form-control mb-1" id="songbox-style-line1" placeholder="“演唱”栏的文字样式">
+                    <input type="text" class="form-control my-1" id="songbox-style-line2" placeholder="“P主/UP主”栏的文字样式">
+                    <input type="text" class="form-control mt-1" id="songbox-style-line3" placeholder="“链接”栏的文字样式">
+                </div>
+
+            </fieldset>
+
+            <fieldset id="songbox-intro-info">
+                <legend>VOCALOID Songbox introduction信息</legend>
+
+                <div class="mb-3">
+                    <label for="songbox-intro-color" class="form-label">模板颜色</label>
+
+                    <div class="row gx-3 align-items-center">
+                        <div class="col-auto">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="lbgcolor">
+                                <label class="form-check-label" for="lbgcolor">左栏背景色</label>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" class="form-control mb-1" id="lbgcolor-input" placeholder="左栏背景色"
+                                disabled>
+                        </div>
+                    </div>
+
+                    <div class="row gx-3 align-items-center">
+                        <div class="col-auto">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="ltcolor">
+                                <label class="form-check-label" for="ltcolor">左栏文字色</label>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" class="form-control mb-1" id="ltcolor-input" placeholder="左栏文字色"
+                                disabled>
+                        </div>
+                    </div>
+
+                    <div class="row gx-3 align-items-center">
+                        <div class="col-auto">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="rbdcolor">
+                                <label class="form-check-label" for="rbdcolor">右栏边框色</label>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" class="form-control mb-1" id="rbdcolor-input" placeholder="右栏边框色"
+                                disabled>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mb-3" id="staff-intro">
+                    <label for="staff-info" class="form-label">STAFF介绍</label>
+
+                    <div class="row gx-3 mb-2 align-items-center">
+                        <div class="col-auto">
+                            <input type="text" class="form-control staff-pos" placeholder="职位">
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" class="form-control staff-name" placeholder="名称">
+                        </div>
+                        <div class="btn-group col-auto" role="group">
+                            <button type="button" class="btn btn-outline-primary staff-add">+</button>
+                            <button type="button" class="btn btn-outline-primary staff-remove" disabled>-</button>
+                        </div>
+                    </div>
+                </div>
+
+            </fieldset>
+
+            <fieldset id="lyrics">
+                <legend>歌词</legend>
+
+                <div class="mb-2 d-flex">
+                    <div class="form-check form-switch mb-2">
+                        <input class="form-check-input" type="checkbox" id="lyrics-change">
+                        <label class="form-check-label" for="lyrics-change">LyricsKai</label>
+                    </div>
+
+                    <div class="form-check form-switch mb-2 ms-4 d-none" id="lyrics-parameter-switch">
+                        <input class="form-check-input" type="checkbox" id="lyrics-parameter">
+                        <label class="form-check-label" for="lyrics-parameter">详细参数</label>
+                    </div>
+                </div>
+
+                <div class="g-2 d-none" id="lyricskai-parameter">
+                    <div class="row mb-3">
+                        <div class="col-3">
+                            <label for="lyrics-orig-lang" class="form-label">原文语言标签</label>
+                            <input type="text" class="form-control" id="lyrics-orig-lang">
+                        </div>
+                        <div class="col-3 offset-3">
+                            <label for="lyrics-trans-lang" class="form-label">翻译语言标签</label>
+                            <input type="text" class="form-control" id="lyrics-trans-lang">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="lyrics-orig-style" class="form-label">原文歌词样式</label>
+                            <input type="text" class="form-control" id="lyrics-orig-style">
+                        </div>
+                        <div class="col">
+                            <label for="lyrics-trans-style" class="form-label">翻译歌词样式</label>
+                            <input type="text" class="form-control" id="lyrics-trans-style">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col">
+                        <label for="lyrics-orig" class="form-label">歌词原文</label>
+                        <textarea class="form-control" id="lyrics-orig" rows="10" required></textarea>
+                        <div class="invalid-feedback">请填写此字段。</div>
+                    </div>
+                    <div class="col d-none">
+                        <label for="lyrics-trans" class="form-label">歌词翻译</label>
+                        <textarea class="form-control" id="lyrics-trans" rows="10"></textarea>
+                        <div class="invalid-feedback">请填写此字段。</div>
+                    </div>
+                </div>
+
+
+            </fieldset>
+
+            <fieldset id="navbox">
+                <legend>大家族模板</legend>
+
+                <div class="mb-3" id="template-info">
+                    <div class="row gx-3 mb-2 align-items-center">
+                        <div class="col-auto">
+                            <input type="text" class="form-control template-name" placeholder="模板名">
+                        </div>
+                        <div class="form-check form-switch col-auto">
+                            <input class="form-check-input template-collapse" type="checkbox" id="template-collapse-0">
+                            <label class="form-check-label" for="template-collapse-0">是否折叠</label>
+                        </div>
+                        <div class="btn-group col-auto" role="group">
+                            <button type="button" class="btn btn-outline-primary template-add">+</button>
+                            <button type="button" class="btn btn-outline-primary template-remove" disabled>-</button>
+                        </div>
+                    </div>
+
+                </div>
+            </fieldset>
+
+            <fieldset id="category">
+                <legend>分类</legend>
+
+                <div class="mb-3" id="category-info">
+                    <div class="row gx-3 mb-2 align-items-center">
+                        <div class="col-auto">
+                            <input type="text" class="form-control category-name" placeholder="分类名">
+                        </div>
+                        <div class="btn-group col-auto" role="group">
+                            <button type="button" class="btn btn-outline-primary category-add">+</button>
+                            <button type="button" class="btn btn-outline-primary category-remove" disabled>-</button>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <button type="submit" class="btn btn-primary">确认</button>
+
+        </form>
+
+        <footer class="text-center text-muted">
+            <ul class="nav justify-content-center border-bottom pb-3 mb-3"></ul>
+            <p>Made with &hearts; by Milkboy & Leranjun</p>
+            <p>Powered by Bootstrap 5</p>
+            <!--
+            <p><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.</p>
+            -->
+            <!--
+            <p><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可。</p>
+            -->
+        </footer>
+    </div>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.0-beta1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="application/javascript">
+        // 合法性检查
+        $(".needs-validation").each((_, ele) => {
+            const self = $(ele);
+            self.on("submit", (e) => {
+                if (!ele.checkValidity()) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+                self.addClass("was-validated");
+            });
+        });
+
+        // ANCHOR 歌曲基础信息
+        // 将“投稿平台”输入框根据复选框选择情况设置是否禁用
+        for (const site of ["bilibili", "acfun", "niconico", "youtube", "other"]) {
+            $(`#${site}-checkbox`).on("change", function () {
+                $(`#${site}-id`).prop("disabled", !this.checked);
+            });
+        }
+
+        // 自动填充数据根据选择是否禁用
+        $("#bilibili-checkbox").on("change", function () {
+            $("#bilibili-datafill").prop("disabled", !this.checked);
+        });
+        // 使用Bilibili数据填充后的部分隐藏
+        $("#bilibili-datafill").on("change", () => $("#song-uploader-control, #song-update-control").toggleClass("d-none"));
+
+        // 手动填入播放数的输入栏
+        $("#view").on("change", function () {
+            $("#view-input").prop("disabled", !this.checked);
+        });
+
+        // ANCHOR 条目基础信息
+        // 歌曲引言的显示与否
+        $("#song-cquote").on("change", function () {
+            $("#song-cquote-input").prop("disabled", !this.checked);
+        });
+
+        // ANCHOR VOCALOID Songbox信息
+        // VOCALOID Songbox的简化设置
+        $("#parameter-full").on("change", () => $("#songbox-bg-simplify, #songbox-bg-full, #songbox-style-simplify, #songbox-style-full").toggleClass("d-none"));
+
+        // ANCHOR VOCALOID Songbox introduction信息
+        // 将“模板颜色”输入框根据复选框选择情况设置是否禁用
+        for (const color of ["lbgcolor", "ltcolor", "rbdcolor"]) {
+            $(`#${color}`).on("change", function () {
+                $(`#${color}-input`).prop("disabled", !this.checked);
+            });
+        }
+
+        // STAFF框
+        let staffNum = 1;
+        const staffTemplate = `<div class="row gx-3 align-items-center">
+            <div class="col-auto">
+                <input type="text" class="form-control mb-1 staff-pos" placeholder="职位">
+            </div>
+            <div class="col-auto">
+                <input type="text" class="form-control mb-1 staff-name" placeholder="名称">
+            </div>
+            <div class="btn-group col-auto" role="group">
+                <button type="button" class="btn btn-outline-primary staff-add">+</button>
+                <button type="button" class="btn btn-outline-primary staff-remove">-</button>
+            </div>
+        </div>`;
+        // 使用$(document).on而非$(".staff-add").on，因为staff-add和staff-remove按钮有可能是动态生成的
+        $(document).on("click", ".staff-add", () => {
+            $("#staff-intro").append(staffTemplate);
+            staffNum++;
+            $(".staff-remove").prop("disabled", false);
+        });
+        $(document).on("click", ".staff-remove", function () {
+            $(this).closest(".row").remove();
+            staffNum--;
+            if (staffNum == 1) {
+                $(".staff-remove").prop("disabled", true);
+            }
+        });
+
+        // ANCHOR 歌词
+        // 歌词部分的状态转换
+        $("#lyrics-change").on("change", function () {
+            $("#lyrics-trans").prop("required", this.checked).parent().toggleClass("d-none");
+            $("#lyrics-parameter-switch").toggleClass("d-none");
+            if (!this.checked) {
+                $("#lyrics-parameter").prop("checked", false);
+                $("#lyricskai-parameter").addClass("d-none")
+            }
+        });
+        $("#lyrics-parameter").on("change", () => $("#lyricskai-parameter").toggleClass("d-none"));
+
+        // ANCHOR 大家族模板
+        let templateNum = 1;
+        const temTemplate = `<div class="row gx-3 mb-2 align-items-center">
+            <div class="col-auto">
+                <input type="text" class="form-control template-name" placeholder="模板名">
+            </div>
+            <div class="form-check form-switch col-auto">
+                <input class="form-check-input template-collapse" type="checkbox" id="template-collapse-$count">
+                <label class="form-check-label" for="template-collapse-$count">是否折叠</label>
+            </div>
+            <div class="btn-group col-auto" role="group">
+                <button type="button" class="btn btn-outline-primary template-add">+</button>
+                <button type="button" class="btn btn-outline-primary template-remove">-</button>
+            </div>
+        </div>`;
+        $(document).on("click", ".template-add", () => {
+            $("#template-info").append(temTemplate.replaceAll("$count", templateNum));
+            templateNum++;
+            $(".template-remove").prop("disabled", false);
+        });
+        $(document).on("click", ".template-remove", function () {
+            $(this).closest(".row").remove();
+            templateNum--;
+            if (templateNum == 1) {
+                $(".template-remove").prop("disabled", true);
+            }
+        });
+
+        // ANCHOR 分类
+        let categoryNum = 1;
+        const categoryTemplate = `<div class="row gx-3 mb-2 align-items-center">
+            <div class="col-auto">
+                <input type="text" class="form-control category-name" placeholder="分类名">
+            </div>
+            <div class="btn-group col-auto" role="group">
+                <button type="button" class="btn btn-outline-primary category-add">+</button>
+                <button type="button" class="btn btn-outline-primary category-remove" disabled>-</button>
+            </div>
+        </div>`;
+        $(document).on("click", ".category-add", () => {
+            $("#category-info").append(categoryTemplate);
+            categoryNum++;
+            $(".category-remove").prop("disabled", false);
+        });
+        $(document).on("click", ".category-remove", function () {
+            $(this).closest(".row").remove();
+            categoryNum--;
+            if (categoryNum == 1) {
+                $(".category-remove").prop("disabled", true);
+            }
+        });
+    </script>
+
+</body>
+
+</html>
