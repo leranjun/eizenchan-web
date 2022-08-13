@@ -1,5 +1,5 @@
 {
     "conventionalCommits.scopes": [
-        "vs-helper"
+        "vc-helper"
     ]
 }
