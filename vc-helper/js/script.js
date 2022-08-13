@@ -13,40 +13,40 @@ $(".needs-validation").each((_, ele) => {
 // ANCHOR 歌曲基础信息
 // 将“投稿平台”输入框根据复选框选择情况设置是否禁用
 for (const site of ["bilibili", "acfun", "niconico", "youtube", "other"]) {
-    $(`#${site}-checkbox`).on("change", function () {
-        $(`#${site}-id`).prop("disabled", !this.checked);
+    $(`#${site}-checkbox`).on("change", (e) => {
+        $(`#${site}-id`).prop("disabled", !e.target.checked);
     });
 }
 
 // 自动填充数据根据选择是否禁用
-$("#bilibili-checkbox").on("change", function () {
-    $("#bilibili-datafill").prop("disabled", !this.checked);
+$("#bilibili-checkbox").on("change", (e) => {
+    $("#bilibili-datafill").prop("disabled", !e.target.checked);
 });
 // 使用Bilibili数据填充后的部分隐藏
 $("#bilibili-datafill").on("change", () => $("#song-uploader-control, #song-update-control").toggleClass("d-none"));
 
 // 手动填入播放数的输入栏
-$("#view").on("change", function () {
-    $("#view-input").prop("disabled", !this.checked);
+$("#view").on("change", (e) => {
+    $("#view-input").prop("disabled", !e.target.checked);
 });
 
 // ANCHOR 条目基础信息
 // 歌曲引言的显示与否
-$("#song-cquote").on("change", function () {
-    $("#song-cquote-input").prop("disabled", !this.checked);
+$("#song-cquote").on("change", (e) => {
+    $("#song-cquote-input").prop("disabled", !e.target.checked);
 });
 
 // ANCHOR VOCALOID Songbox信息
 // VOCALOID Songbox的简化设置
 $("#parameter-full").on("change", () =>
-    $("#songbox-bg-simplify, #songbox-bg-full, #songbox-style-simplify, #songbox-style-full").toggleClass("d-none")
+    $("#songbox-bg-simplify, #songbox-bg-full, #songbox-style-simplify, #songbox-style-full").toggleClass("d-none"),
 );
 
 // ANCHOR VOCALOID Songbox introduction信息
 // 将“模板颜色”输入框根据复选框选择情况设置是否禁用
 for (const color of ["lbgcolor", "ltcolor", "rbdcolor"]) {
-    $(`#${color}`).on("change", function () {
-        $(`#${color}-input`).prop("disabled", !this.checked);
+    $(`#${color}`).on("change", (e) => {
+        $(`#${color}-input`).prop("disabled", !e.target.checked);
     });
 }
 
@@ -70,20 +70,18 @@ $(document).on("click", ".staff-add", () => {
     staffNum++;
     $(".staff-remove").prop("disabled", false);
 });
-$(document).on("click", ".staff-remove", function () {
-    $(this).closest(".row").remove();
+$(document).on("click", ".staff-remove", (e) => {
+    $(e.target).closest(".row").remove();
     staffNum--;
-    if (staffNum == 1) {
-        $(".staff-remove").prop("disabled", true);
-    }
+    $(".staff-remove").prop("disabled", staffNum == 1);
 });
 
 // ANCHOR 歌词
 // 歌词部分的状态转换
-$("#lyrics-change").on("change", function () {
-    $("#lyrics-trans").prop("required", this.checked).parent().toggleClass("d-none");
+$("#lyrics-change").on("change", (e) => {
+    $("#lyrics-trans").prop("required", e.target.checked).parent().toggleClass("d-none");
     $("#lyrics-parameter-switch").toggleClass("d-none");
-    if (!this.checked) {
+    if (!e.target.checked) {
         $("#lyrics-parameter").prop("checked", false);
         $("#lyricskai-parameter").addClass("d-none");
     }
@@ -110,12 +108,10 @@ $(document).on("click", ".template-add", () => {
     templateNum++;
     $(".template-remove").prop("disabled", false);
 });
-$(document).on("click", ".template-remove", function () {
-    $(this).closest(".row").remove();
+$(document).on("click", ".template-remove", (e) => {
+    $(e.target).closest(".row").remove();
     templateNum--;
-    if (templateNum == 1) {
-        $(".template-remove").prop("disabled", true);
-    }
+    $(".template-remove").prop("disabled", templateNum == 1);
 });
 
 // ANCHOR 分类
@@ -134,10 +130,8 @@ $(document).on("click", ".category-add", () => {
     categoryNum++;
     $(".category-remove").prop("disabled", false);
 });
-$(document).on("click", ".category-remove", function () {
-    $(this).closest(".row").remove();
+$(document).on("click", ".category-remove", (e) => {
+    $(e.target).closest(".row").remove();
     categoryNum--;
-    if (categoryNum == 1) {
-        $(".category-remove").prop("disabled", true);
-    }
+    $(".category-remove").prop("disabled", categoryNum == 1);
 });
